@@ -26,6 +26,20 @@ a {
     text-decoration: none;
     color: white;
 }
+.description {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-color);
+}
+.title {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+
 
 /* layouts */
 .container {
@@ -92,4 +106,11 @@ a {
     .profile_container {
         flex-direction: column;
     }
+}
+
+/* Expertise */
+.skill_list {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    line-height: 2;
 }
