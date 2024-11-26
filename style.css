@@ -65,6 +65,14 @@ a {
     margin-bottom: 2rem;
 }
 
+
+.group-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+
 /* profile */
 .profile_container {
     display: flex;
@@ -113,4 +121,14 @@ a {
     margin-top: 1rem;
     margin-left: 2rem;
     line-height: 2;
+}
+
+
+/* Ref */
+.ref_item {
+    margin-top: 2rem;
+}
+.ref_name {
+    font-size: 1.6rem;
+    font-weight: 700;
 }
