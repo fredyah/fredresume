@@ -142,12 +142,32 @@
                     <h3 class="title">My Projects</h3>
                     <div class="awards_item">
                         <p class="item_preTitle">Project for Managing Docker Registry Disk Space</p>
-                        <h4 class="item_title">Solution to address the issue of a full disk in the Docker registry</h4>
+                        <h4 class="item_title">Solution to address the issue of a full disk in the Docker Registry</h4>
                         <p class="description">
                             ● Automation: Used crontab to schedule periodic scans. <br/>
                             ● Image and Tag Retrieval: Leveraged curl and jq to fetch image and tag information from the Docker Registry API. <br/>
                             ● Cleanup Logic: Identified images older than 180 days and automatically deleted them. <br/>
                             ● Notification: Sent the deleted tags and their creation timestamps to a Discord channel for logging and monitoring purposes. <br/>
+                        </p>
+                    </div>
+                    <div class="awards_item">
+                        <p class="item_preTitle">Scheduled Scanning of Kubernetes Pod Logs for Error Messages</p>
+                        <h4 class="item_title">Python script to monitor and report errors in Kubernetes pod logs</h4>
+                        <p class="description">
+                            ● Automation: Utilized crontab to schedule periodic scans. <br/>
+                            ● Log Retrieval: Used Python's os and requests libraries alongside kubectl logs to fetch log messages from pods within specific namespaces. <br/>
+                            ● Error Detection: Filtered log data to identify error messages. <br/>
+                            ● Notification: Sent identified error messages to a Discord channel for prompt alerting and resolution. <br/>
+                        </p>
+                    </div>
+                    <div class="awards_item">
+                        <p class="item_preTitle">Scheduled Monitoring of Kubernetes Node and Pod States</p>
+                        <h4 class="item_title">Python script to monitor the status of Kubernetes nodes and pods and take corrective actions if issues are detected</h4>
+                        <p class="description">
+                            ● Automation: Utilized crontab to schedule periodic scans. <br/>
+                            ● State Monitoring: Employed Python's boto3, os, and requests libraries to check the status of clusters, nodes, and pods. <br/>
+                            ● Alerting: Detected states such as cordon, drain, or any non-running/terminating status and sent notifications to a Discord channel. <br/>
+                            ● Remediation: Used boto3 to interact with AWS and perform redeployments or rollout restarts for affected deployments. <br/>
                         </p>
                     </div>
                 </div>
