@@ -152,6 +152,12 @@ a {
     font-weight: 700;
 }
 
+/* eduction */
 .edu_item {
+    margin-top: 2rem;
+}
+
+/* certification */
+.certification_item {
     margin-top: 2rem;
 }
