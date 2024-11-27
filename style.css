@@ -92,6 +92,18 @@ a {
     gap: 5rem;
 }
 
+.group-3 {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+}
+.group-3 > div {
+    flex: 1;
+}
 
 /* profile */
 .profile_container {
@@ -194,4 +206,36 @@ a {
 
 .interest_item svg {
     width: 2rem;
+}
+
+
+/* Socials */
+.social_items {
+    margin-top: 2rem;
+}
+
+.social_item {
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--text-color);
+}
+.social_item:hover {
+    color: var(--primary-color);
+}
+.social_item svg {
+    width: 2rem;
+}
+
+hr {
+    grid-column: 1/-1;
+    width: 88%;
+    margin: 0 auto;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-top: 2px solid rgba(128, 128, 128, 0.6);
 }
