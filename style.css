@@ -160,6 +160,10 @@ a {
 .ref_item {
     margin-top: 2rem;
 }
+.ref_item li {
+    font-size: 1.4rem;
+}
+
 .ref_name {
     font-size: 1.6rem;
     font-weight: 700;
@@ -203,6 +207,11 @@ a {
     gap: 0.5rem;
     color: var(--text-color);
 }
+
+.interest_items span {
+    font-size: 1.3rem;
+}
+
 
 .interest_item svg {
     width: 2rem;
