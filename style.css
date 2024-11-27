@@ -105,6 +105,16 @@ a {
     flex: 1;
 }
 
+@media only screen and (max-width: 768px) {
+    .profile {
+        margin-bottom: 0;
+    }
+    .group-3 {
+        flex-direction: column;
+    }
+}
+
+
 /* profile */
 .profile_container {
     display: flex;
@@ -247,4 +257,10 @@ hr {
     margin-bottom: 1rem;
     border: none;
     border-top: 2px solid rgba(128, 128, 128, 0.6);
+}
+
+@media only screen and (max-width: 768px) {
+    hr {
+        margin: 0 auto;
+    }
 }
