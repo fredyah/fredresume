@@ -72,8 +72,8 @@ a {
     gap: 4rem;
 }
 .qrcode-container img {
-    width: 100px !important;
-    height: 100px !important;
+    width: 200px !important;
+    height: 200px !important;
     object-fit: cover;
 }
 @media only screen and (max-width: 768px) {
