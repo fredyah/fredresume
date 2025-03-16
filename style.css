@@ -71,6 +71,11 @@ a {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
 }
+.qrcode-container img {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover;
+}
 @media only screen and (max-width: 768px) {
     .container {
         width: 100%;
