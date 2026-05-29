@@ -128,6 +128,12 @@
       border-color: var(--accent-teal);
     }
 
+    .controls button[aria-pressed="true"] {
+      background: rgba(20, 184, 166, 0.22);
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -889,9 +895,51 @@
 
   </div>
 
+  <audio id="slideAudio" preload="metadata"></audio>
+
   <script>
     let currentSlide = 1;
     const totalSlides = 10;
+    const AUDIO_BASE = './audio';
+    const AUDIO_AUTOPLAY_KEY = 'deck-audio-autoplay';
+    const slideAudio = document.getElementById('slideAudio');
+    let isSlideAudioEnabled = true;
+    let loadedAudioSlide = 0;
+
+    function slideAudioPath(index) {
+      return `${AUDIO_BASE}/Slide_${index}.wav`;
+    }
+
+    function stopSlideAudio() {
+      slideAudio.pause();
+      slideAudio.currentTime = 0;
+    }
+
+    function playSlideAudio(index) {
+      if (!isSlideAudioEnabled) return;
+
+      stopSlideAudio();
+
+      if (loadedAudioSlide !== index) {
+        slideAudio.src = slideAudioPath(index);
+        loadedAudioSlide = index;
+      }
+
+      slideAudio.play().catch(() => {});
+    }
+
+    function updateAudioToggleUI() {
+      document.querySelectorAll('.audio-toggle-btn').forEach((btn) => {
+        btn.textContent = isSlideAudioEnabled ? '語音：開' : '語音：關';
+        btn.setAttribute('aria-pressed', String(isSlideAudioEnabled));
+      });
+    }
+
+    function initSlideAudioPreference() {
+      const stored = localStorage.getItem(AUDIO_AUTOPLAY_KEY);
+      isSlideAudioEnabled = stored === null ? true : stored === 'on';
+      updateAudioToggleUI();
+    }
 
     function showSlide(index) {
       if (index < 1 || index > totalSlides) return;
@@ -900,6 +948,7 @@
       const next = document.getElementById(`slide-${index}`);
       if (next) next.classList.add('active');
       currentSlide = index;
+      playSlideAudio(index);
     }
 
     function nextSlide() {
@@ -917,10 +966,28 @@
       if (e.key === 'End') showSlide(totalSlides);
     });
 
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.audio-toggle-btn')) return;
+      isSlideAudioEnabled = !isSlideAudioEnabled;
+      localStorage.setItem(AUDIO_AUTOPLAY_KEY, isSlideAudioEnabled ? 'on' : 'off');
+      updateAudioToggleUI();
+      if (!isSlideAudioEnabled) {
+        stopSlideAudio();
+      } else {
+        playSlideAudio(currentSlide);
+      }
+    });
+
     const footerControls = document.createElement('div');
     footerControls.className = 'controls';
-    footerControls.innerHTML = '<button onclick="prevSlide()">上一頁</button><button onclick="nextSlide()">下一頁</button>';
+    footerControls.innerHTML =
+      '<button type="button" class="audio-toggle-btn" aria-pressed="true">語音：開</button>' +
+      '<button type="button" onclick="prevSlide()">上一頁</button>' +
+      '<button type="button" onclick="nextSlide()">下一頁</button>';
     document.querySelectorAll('.slide-footer').forEach(footer => footer.appendChild(footerControls.cloneNode(true)));
+
+    initSlideAudioPreference();
+    if (isSlideAudioEnabled) playSlideAudio(1);
   </script>
 </body>
 </html>
