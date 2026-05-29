@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DevOps / SRE 面試題 Q1–Q6 專業回答整理</title>
+  <meta name="description" content="DevOps / SRE 面試題 Q1–Q6：Incident、Air-gap、HA、Observability、IaC、過往經驗。" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="reading-progress" aria-hidden="true">
+    <div id="readingProgressBar" class="reading-progress-bar"></div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="目錄">
+      <div class="brand">
+        <div class="brand-mark">SRE</div>
+        <div>
+          <div class="brand-title">DevOps / SRE</div>
+          <div class="brand-subtitle">Interview Playbook</div>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="搜尋關鍵字，例如 K8s、RCA、SLO..." />
+      </div>
+
+      <nav id="toc" class="toc"></nav>
+
+      <div class="sidebar-footer">
+        <button id="audioToggleBtn" class="secondary-btn" type="button" aria-pressed="false">語音：關</button>
+        <button id="themeBtn" class="secondary-btn" type="button" aria-pressed="false">深色模式</button>
+        <button id="printBtn" class="secondary-btn" type="button">列印 / 另存 PDF</button>
+        <button id="expandBtn" class="secondary-btn" type="button">全部展開</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Q1–Q6 專業回答整理</h1>
+          <p class="hero-lead">
+            以 Incident Response、Air-Gap Deployment、High Availability、Observability、IaC / Kubernetes、STAR 過往經驗為核心，
+            整理成可維護、可列印、可快速搜尋的靜態 HTML。
+          </p>
+          <div class="hero-actions">
+            <a href="#q1" class="primary-btn">開始閱讀</a>
+            <button id="copyAllBtn" class="ghost-btn" type="button">複製純文字</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="contentRoot" class="content-root"></section>
+
+      <section id="about-me" class="profile-section" aria-label="自我介紹">
+        <div class="profile-card audio-target" data-audio="about-me.wav">
+          <p class="profile-eyebrow">About Me</p>
+          <h2>自我介紹</h2>
+          <p>各位面試官好，我叫葉紹棠，也可以叫我 Fred。</p>
+          <p>
+            我目前的職涯方向主要是 DevOps、AI 系統工程師，以及雲端與系統維運開發。過去我的工作經驗比較跨領域，
+            早期有業務、設備維修與客戶溝通的經驗，後來逐步轉向系統工程、DevOps、自動化維運，以及近年的 AI 系統整合。
+            這樣的背景讓我不只具備技術實作能力，也比較能理解需求、溝通問題，並把技術方案真正落地。
+          </p>
+          <p>
+            在技術方面，我最熟悉的是 Linux 系統維運與自動化處理，包含 Ubuntu、CentOS、NGINX、crontab、
+            Shell Script、Python Script、服務部署、Log 分析與問題排查。過去工作中，我常需要處理伺服器環境建置、
+            服務異常排查、備份還原、排程任務，以及監控告警整合。
+          </p>
+          <p>
+            在 DevOps 方面，我有實際使用 GitLab、GitLab Runner、CI/CD Pipeline、Docker、Dockerfile、
+            Kubernetes、Rancher、Helm、Argo CD 等工具的經驗。工作上會協助專案從程式建置、Image 打包、
+            部署到 Kubernetes 環境，以及後續的維運監控。監控方面，我也有接觸 Prometheus、Grafana、Zabbix、Graylog，
+            並且會透過 Line、Telegram 或 Discord Bot 做告警通知，讓問題能更快被發現與處理。
+          </p>
+          <p>
+            近年我也投入很多在 AI 系統與應用平台建置。例如我有建置與使用 Ollama、vLLM、OpenWebUI、
+            AnythingLLM、n8n、RAG、Milvus、Hugging Face 模型 等經驗，也參與過 AI 相關後端 API 的開發，
+            包含 Python API、C# Middleware API，以及文件分塊、metadata、向量資料庫串接等流程。
+            對我來說，AI 不只是模型本身，更重要的是如何把模型、資料、API、容器平台和實際應用場景整合起來。
+          </p>
+          <p>
+            資料庫方面，我有使用 MySQL、PostgreSQL、Redis、SQLite、Milvus、Qdrant 等經驗，
+            能處理基本查詢、備份還原、權限設定與服務串接。雲端方面則接觸過 AWS、Azure、GCP、Aliyun、Tencent Cloud，
+            其中 AWS 使用經驗包含 EC2、VPC、Security Group、ALB、RDS、EKS、Route53、CloudWatch 等服務。
+          </p>
+          <p>
+            我認為自己的優勢是：第一，具備系統維運、DevOps、AI 平台與後端 API 的整合能力；第二，因為過去有業務與現場服務經驗，
+            所以在跨部門溝通、需求釐清與問題協調上比較有彈性；第三，我很重視自動化與可維護性，面對重複性任務時，
+            會傾向用腳本、流程或監控機制來降低人工錯誤。
+          </p>
+          <p>
+            未來我希望能持續往 DevOps / SRE / AI 系統整合 的方向發展，強化 Kubernetes、IaC、MLOps、
+            監控告警與高可用架構設計能力。也希望能在團隊中協助提升系統穩定性、部署效率與 AI 應用落地能力。
+          </p>
+          <p>以上是我的自我介紹，謝謝。</p>
+          <div class="profile-highlights">
+            <span>DevOps / SRE</span>
+            <span>AI 系統整合</span>
+            <span>Kubernetes / IaC</span>
+            <span>CI/CD 自動化</span>
+            <span>Observability</span>
+            <span>Cloud / Platform</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button id="backToTop" class="back-to-top" type="button" aria-label="回到頂部">↑</button>
+
+  <script src="./content.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

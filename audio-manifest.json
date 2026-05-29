@@ -1,0 +1,44 @@
+[
+  { "file": "q1-1.wav", "question_id": "q1", "block_type": "question", "section_heading": "題目" },
+  { "file": "q1-2.wav", "question_id": "q1", "block_type": "section", "section_heading": "回答重點" },
+  { "file": "q1-3.wav", "question_id": "q1", "block_type": "section", "section_heading": "實際排查指令" },
+  { "file": "q1-4.wav", "question_id": "q1", "block_type": "section", "section_heading": "止血與復盤" },
+  { "file": "q1-5.wav", "question_id": "q1", "block_type": "section", "section_heading": "加分句" },
+
+  { "file": "q2-1.wav", "question_id": "q2", "block_type": "question", "section_heading": "題目" },
+  { "file": "q2-2.wav", "question_id": "q2", "block_type": "section", "section_heading": "整體策略" },
+  { "file": "q2-3.wav", "question_id": "q2", "block_type": "section", "section_heading": "自動化部署流程" },
+  { "file": "q2-4.wav", "question_id": "q2", "block_type": "section", "section_heading": "Artifacts 與內部倉庫" },
+  { "file": "q2-5.wav", "question_id": "q2", "block_type": "section", "section_heading": "部署前驗證" },
+  { "file": "q2-6.wav", "question_id": "q2", "block_type": "section", "section_heading": "Secret 與風險控管" },
+
+  { "file": "q3-1.wav", "question_id": "q3", "block_type": "question", "section_heading": "題目" },
+  { "file": "q3-2.wav", "question_id": "q3", "block_type": "section", "section_heading": "整體原則" },
+  { "file": "q3-3.wav", "question_id": "q3", "block_type": "section", "section_heading": "Django Service + Celery Worker HA" },
+  { "file": "q3-4.wav", "question_id": "q3", "block_type": "section", "section_heading": "Celery Worker 與 KEDA" },
+  { "file": "q3-5.wav", "question_id": "q3", "block_type": "section", "section_heading": "PostgreSQL HA" },
+  { "file": "q3-6.wav", "question_id": "q3", "block_type": "section", "section_heading": "PostgreSQL 驗證 SQL" },
+  { "file": "q3-7.wav", "question_id": "q3", "block_type": "section", "section_heading": "Elasticsearch HA" },
+  { "file": "q3-8.wav", "question_id": "q3", "block_type": "section", "section_heading": "備份、容量與演練" },
+
+  { "file": "q4-1.wav", "question_id": "q4", "block_type": "question", "section_heading": "題目" },
+  { "file": "q4-2.wav", "question_id": "q4", "block_type": "section", "section_heading": "設計目標" },
+  { "file": "q4-3.wav", "question_id": "q4", "block_type": "section", "section_heading": "Metrics 與 SLO" },
+  { "file": "q4-4.wav", "question_id": "q4", "block_type": "section", "section_heading": "Logs 與日誌治理" },
+  { "file": "q4-5.wav", "question_id": "q4", "block_type": "section", "section_heading": "Tracing 與 OpenTelemetry" },
+  { "file": "q4-6.wav", "question_id": "q4", "block_type": "section", "section_heading": "Alerting、Dashboard 與 Runbook" },
+  { "file": "q4-7.wav", "question_id": "q4", "block_type": "section", "section_heading": "504 排查流程示例" },
+
+  { "file": "q5-1.wav", "question_id": "q5", "block_type": "question", "section_heading": "題目" },
+  { "file": "q5-2.wav", "question_id": "q5", "block_type": "section", "section_heading": "工具分層治理" },
+  { "file": "q5-3.wav", "question_id": "q5", "block_type": "section", "section_heading": "GitOps 與 CI/CD 協作" },
+  { "file": "q5-4.wav", "question_id": "q5", "block_type": "section", "section_heading": "Secret 管理" },
+  { "file": "q5-5.wav", "question_id": "q5", "block_type": "section", "section_heading": "託管 K8s vs On-Prem 自建 K8s" },
+  { "file": "q5-6.wav", "question_id": "q5", "block_type": "section", "section_heading": "什麼情境建議自建 K8s" },
+
+  { "file": "q6-1.wav", "question_id": "q6", "block_type": "question", "section_heading": "題目" },
+  { "file": "q6-2.wav", "question_id": "q6", "block_type": "section", "section_heading": "建議主題" },
+  { "file": "q6-3.wav", "question_id": "q6", "block_type": "section", "section_heading": "STAR 架構" },
+  { "file": "q6-4.wav", "question_id": "q6", "block_type": "section", "section_heading": "完整回答範例" },
+  { "file": "about-me.wav", "question_id": "about", "block_type": "section", "section_heading": "自我介紹" }
+]
