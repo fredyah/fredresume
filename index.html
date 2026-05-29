@@ -307,10 +307,11 @@
     }
 
     .cover-wrap {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 40px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 980px;
+      margin: 0 auto;
       height: 100%;
     }
 
@@ -423,51 +424,40 @@
     <section class="slide active" id="slide-1">
       <div class="slide-content">
         <div class="cover-wrap">
-          <div>
-            <h1 class="cover-title">現代雲端架構與<br>AI 系統落地實踐</h1>
-            <p class="cover-subtitle">
-              Fred Yeh (葉紹棠) — DevOps / AI 系統工程師<br>
-              以 Linux、Kubernetes、後端 API、自動化與 Local LLM 經驗，支撐企業 AI 應用落地。
-            </p>
+          <h1 class="cover-title">現代雲端架構與<br>AI 系統落地實踐</h1>
+          <p class="cover-subtitle">
+            Fred Yeh (葉紹棠) — DevOps / AI 系統工程師<br>
+            以 Linux、Kubernetes、後端 API、自動化與 Local LLM 經驗，支撐企業 AI 應用落地。
+          </p>
 
-            <div class="grid-2">
-              <div class="card em">
-                <h3>目前角色</h3>
-                <p>AI 系統工程師，負責 Python / C# API、AI 環境建置、K8s / Docker 自動化維運，以及 Azure / AWS 使用。</p>
-              </div>
-              <div class="card">
-                <h3>核心定位</h3>
-                <p>不是單點工具操作，而是從需求、開發、部署、監控到維運的端到端整合型工程能力。</p>
-              </div>
+          <div class="grid-2">
+            <div class="card em">
+              <h3>職務角色</h3>
+              <p>AI 系統工程師，負責 Python / C# API、AI 環境建置、K8s / Docker 自動化維運，以及 Azure / AWS 使用。</p>
             </div>
-
-            <div class="metric-row">
-              <div class="metric">
-                <div class="num">16+</div>
-                <div class="label">年跨領域工作經驗</div>
-              </div>
-              <div class="metric">
-                <div class="num">DevOps</div>
-                <div class="label">K8s、Docker、CI/CD、監控告警</div>
-              </div>
-              <div class="metric">
-                <div class="num">AI</div>
-                <div class="label">Ollama、vLLM、RAG、Milvus</div>
-              </div>
-              <div class="metric">
-                <div class="num">Infra</div>
-                <div class="label">Cloud + On-Prem + Server</div>
-              </div>
+            <div class="card">
+              <h3>核心定位</h3>
+              <p>不是單點工具操作，而是從需求、開發、部署、監控到維運的端到端整合型工程能力。</p>
             </div>
           </div>
 
-          <div class="card purple">
-            <h3>簡報主軸</h3>
-            <ul>
-              <li>以履歷 PDF 中明確出現的經歷與技能為主，不放未被履歷支撐的案例包裝。</li>
-              <li>聚焦 AI 系統工程、DevOps、自動化維運、Local LLM 與 RAG 落地能力。</li>
-              <li>補強跨業務、維修、系統工程到 AI DevOps 的溝通與落地優勢。</li>
-            </ul>
+          <div class="metric-row">
+            <div class="metric">
+              <div class="num">16+</div>
+              <div class="label">年跨領域工作經驗</div>
+            </div>
+            <div class="metric">
+              <div class="num">DevOps</div>
+              <div class="label">K8s、Docker、CI/CD、監控告警</div>
+            </div>
+            <div class="metric">
+              <div class="num">AI</div>
+              <div class="label">Ollama、vLLM、RAG、Milvus</div>
+            </div>
+            <div class="metric">
+              <div class="num">Infra</div>
+              <div class="label">Cloud + On-Prem + Server</div>
+            </div>
           </div>
         </div>
       </div>
