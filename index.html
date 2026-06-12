@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fred Yeh 技術面試簡報 - DevOps / AI System Engineer</title>
   <style>
+
     :root {
       --bg-main: #0f172a;
       --bg-card: #1e293b;
@@ -18,11 +19,7 @@
       --border-color: #334155;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body, html {
       width: 100%;
@@ -50,19 +47,14 @@
       width: 100%;
       height: 100%;
       padding: 42px 64px;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.985);
+      opacity: 1;
+      transform: scale(1);
       transition: opacity 0.35s ease, transform 0.35s ease;
       display: flex;
       flex-direction: column;
     }
 
-    .slide.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
-    }
+    .slide.is-changing { opacity: 0; transform: scale(0.985); }
 
     .slide-header {
       border-left: 5px solid var(--accent-teal);
@@ -70,6 +62,8 @@
       margin-bottom: 28px;
       flex-shrink: 0;
     }
+
+    .slide-header.hidden { display: none; }
 
     .slide-header h2 {
       font-size: 25pt;
@@ -106,10 +100,14 @@
       pointer-events: auto;
     }
 
+    .footer-left, .footer-page { white-space: nowrap; }
+
     .controls {
       display: flex;
       gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .controls button {
@@ -128,29 +126,16 @@
       border-color: var(--accent-teal);
     }
 
-    .controls button[aria-pressed="true"] {
+    .controls button[aria-pressed="true"],
+    .controls button.active-lang {
       background: rgba(20, 184, 166, 0.22);
       border-color: var(--accent-teal);
       color: var(--accent-teal);
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 
     .card {
       background: rgba(30, 41, 59, 0.92);
@@ -170,40 +155,14 @@
       background: linear-gradient(180deg, rgba(168, 85, 247, 0.10), rgba(30, 41, 59, 0.94));
     }
 
-    .card h3 {
-      font-size: 15pt;
-      margin-bottom: 12px;
-      color: var(--accent-teal);
-      line-height: 1.35;
-    }
+    .card h3 { font-size: 15pt; margin-bottom: 12px; color: var(--accent-teal); line-height: 1.35; }
+    .card h4 { font-size: 13pt; margin-bottom: 8px; color: var(--text-main); line-height: 1.4; }
 
-    .card h4 {
-      font-size: 13pt;
-      margin-bottom: 8px;
-      color: var(--text-main);
-      line-height: 1.4;
-    }
+    p { color: var(--text-main); line-height: 1.65; font-size: 12pt; }
+    .muted { color: var(--text-muted); }
+    .highlight { color: var(--accent-teal); font-weight: 700; }
 
-    p {
-      color: var(--text-main);
-      line-height: 1.65;
-      font-size: 12pt;
-    }
-
-    .muted {
-      color: var(--text-muted);
-    }
-
-    .highlight {
-      color: var(--accent-teal);
-      font-weight: 700;
-    }
-
-    .interview-cta-wrap {
-      margin-top: 22px;
-      display: flex;
-      justify-content: center;
-    }
+    .interview-cta-wrap { margin-top: 22px; display: flex; justify-content: center; }
 
     .interview-cta {
       display: inline-flex;
@@ -228,19 +187,10 @@
       box-shadow: 0 14px 30px rgba(20, 184, 166, 0.3);
     }
 
-    .interview-cta:focus-visible {
-      outline: 2px solid var(--accent-blue);
-      outline-offset: 3px;
-    }
+    .interview-cta:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 3px; }
+    .purple-text { color: var(--accent-purple); font-weight: 700; }
 
-    .purple-text {
-      color: var(--accent-purple);
-      font-weight: 700;
-    }
-
-    ul {
-      list-style: none;
-    }
+    ul { list-style: none; }
 
     li {
       position: relative;
@@ -279,12 +229,7 @@
       background: rgba(168, 85, 247, 0.13);
     }
 
-    .metric-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 22px;
-    }
+    .metric-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
 
     .metric {
       padding: 16px;
@@ -293,18 +238,8 @@
       background: rgba(15, 23, 42, 0.72);
     }
 
-    .metric .num {
-      font-size: 18pt;
-      color: var(--accent-teal);
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .metric .label {
-      font-size: 10.5pt;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
+    .metric .num { font-size: 18pt; color: var(--accent-teal); font-weight: 800; margin-bottom: 6px; }
+    .metric .label { font-size: 10.5pt; color: var(--text-muted); line-height: 1.45; }
 
     .cover-wrap {
       display: flex;
@@ -343,17 +278,8 @@
       font-size: 12pt;
     }
 
-    .timeline {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      position: relative;
-    }
-
-    .timeline-card {
-      border-top: 4px solid var(--accent-teal);
-    }
-
+    .timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; position: relative; }
+    .timeline-card { border-top: 4px solid var(--accent-teal); }
     .timeline-card:nth-child(2) { border-top-color: var(--accent-purple); }
     .timeline-card:nth-child(3) { border-top-color: var(--accent-amber); }
     .timeline-card:nth-child(4) { border-top-color: var(--accent-blue); }
@@ -388,516 +314,223 @@
       vertical-align: top;
     }
 
-    th {
-      color: var(--accent-teal);
-      background: rgba(20, 184, 166, 0.11);
-      font-size: 11pt;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .small-note {
-      margin-top: 18px;
-      color: var(--text-muted);
-      font-size: 10.8pt;
-      line-height: 1.6;
-    }
+    th { color: var(--accent-teal); background: rgba(20, 184, 166, 0.11); font-size: 11pt; }
+    tr:last-child td { border-bottom: none; }
+    .small-note { margin-top: 18px; color: var(--text-muted); font-size: 10.8pt; line-height: 1.6; }
 
     @media (max-width: 900px) {
       .slide { padding: 28px 28px; }
-      .slide-footer { left: 28px; right: 28px; }
-      .grid-2, .grid-3, .grid-4, .cover-wrap, .timeline, .metric-row {
-        grid-template-columns: 1fr;
-      }
+      .slide-footer { left: 28px; right: 28px; align-items: flex-start; gap: 10px; }
+      .grid-2, .grid-3, .grid-4, .cover-wrap, .timeline, .metric-row { grid-template-columns: 1fr; }
       .cover-title { font-size: 29pt; }
       .slide-header h2 { font-size: 21pt; }
+      .footer-left { display: none; }
     }
+
   </style>
 </head>
 
 <body>
   <div class="deck-container">
-
-    <!-- SLIDE 1 -->
-    <section class="slide active" id="slide-1">
-      <div class="slide-content">
-        <div class="cover-wrap">
-          <h1 class="cover-title">現代雲端架構與<br>AI 系統落地實踐</h1>
-          <p class="cover-subtitle">
-            Fred Yeh (葉紹棠) — DevOps / AI 系統工程師<br>
-            以 Linux、Kubernetes、後端 API、自動化與 Local LLM 經驗，支撐企業 AI 應用落地。
-          </p>
-
-          <div class="grid-2">
-            <div class="card em">
-              <h3>職務角色</h3>
-              <p>AI 系統工程師，負責 Python / C# API、AI 環境建置、K8s / Docker 自動化維運，以及 Azure / AWS 使用。</p>
-            </div>
-            <div class="card">
-              <h3>核心定位</h3>
-              <p>不是單點工具操作，而是從需求、開發、部署、監控到維運的端到端整合型工程能力。</p>
-            </div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric">
-              <div class="num">16+</div>
-              <div class="label">年跨領域工作經驗</div>
-            </div>
-            <div class="metric">
-              <div class="num">DevOps</div>
-              <div class="label">K8s、Docker、CI/CD、監控告警</div>
-            </div>
-            <div class="metric">
-              <div class="num">AI</div>
-              <div class="label">Ollama、vLLM、RAG、Milvus</div>
-            </div>
-            <div class="metric">
-              <div class="num">Infra</div>
-              <div class="label">Cloud + On-Prem + Server</div>
-            </div>
-          </div>
-        </div>
+    <section class="slide active" id="slide">
+      <div class="slide-header" id="slideHeader">
+        <h2 id="slideTitle"></h2>
+        <div class="subheader" id="slideSubheader"></div>
       </div>
+      <div class="slide-content" id="slideContent"></div>
       <div class="slide-footer">
-        <span>Fred Yeh | elvisyah@gmail.com</span>
-        <span>1 / 10</span>
+        <span class="footer-left" id="footerLeft"></span>
+        <div class="controls">
+          <button type="button" id="audioToggleBtn" aria-pressed="true"></button>
+          <button type="button" id="langZhBtn" data-lang="zh">中文</button>
+          <button type="button" id="langEnBtn" data-lang="en">English</button>
+          <button type="button" id="prevBtn"></button>
+          <button type="button" id="nextBtn"></button>
+        </div>
+        <span class="footer-page" id="footerPage"></span>
       </div>
     </section>
-
-    <!-- SLIDE 2 -->
-    <section class="slide" id="slide-2">
-      <div class="slide-header">
-        <h2>職涯定位：從第一線溝通到 AI 系統工程落地</h2>
-        <div class="subheader">把跨領域歷練轉化為需求理解、問題拆解與系統整合能力</div>
-      </div>
-      <div class="slide-content">
-        <div class="timeline">
-          <div class="card timeline-card">
-            <h3>業務與現場經驗</h3>
-            <p class="muted">國內業務、房仲、保險業務</p>
-            <ul>
-              <li>建立客戶溝通、需求釐清、跨部門協調能力。</li>
-              <li>能理解技術方案背後的成本、交期與使用者需求。</li>
-            </ul>
-          </div>
-          <div class="card timeline-card">
-            <h3>硬體與系統基礎</h3>
-            <p class="muted">維修工程師、系統工程師</p>
-            <ul>
-              <li>熟悉 Linux、NGINX、雲端基礎服務與地端機房場景。</li>
-              <li>理解硬體、網路、VM、NAS 與服務部署之間的關聯。</li>
-            </ul>
-          </div>
-          <div class="card timeline-card">
-            <h3>DevOps 與平台維運</h3>
-            <p class="muted">K8s、Docker、CI/CD、監控告警</p>
-            <ul>
-              <li>具備 GitLab Runner、Dockerfile、Pipeline、Kubernetes、Grafana、Prometheus 等經驗。</li>
-              <li>能以腳本、自動化與告警機制降低人工維運成本。</li>
-            </ul>
-          </div>
-          <div class="card timeline-card">
-            <h3>AI 系統工程</h3>
-            <p class="muted">Local LLM、RAG、Backend API</p>
-            <ul>
-              <li>建置 Ollama、vLLM、n8n、RAG、Milvus、Hugging Face 相關環境。</li>
-              <li>參與 Python / C# API 與 AI 應用後端整合。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="quote" style="margin-top: 26px;">
-          我的優勢不是只會某一套工具，而是能把「需求、基礎設施、後端 API、容器平台、AI 模型與維運流程」串成可落地的系統方案。
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>2 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 3 -->
-    <section class="slide" id="slide-3">
-      <div class="slide-header">
-        <h2>技術矩陣：支撐 DevOps 與 AI 應用的實務工具箱</h2>
-        <div class="subheader">以履歷中實際出現的工具與經驗整理，不硬加無佐證案例</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-4">
-          <div class="card">
-            <h3>Cloud & On-Prem</h3>
-            <span class="badge">AWS</span>
-            <span class="badge">Azure</span>
-            <span class="badge">GCP</span>
-            <span class="badge">AliYun</span>
-            <span class="badge">Tencent Cloud</span>
-            <span class="badge">VMware / vSphere / ESXi</span>
-            <span class="badge">Dell Server / SAN / Switch</span>
-            <span class="badge">NAS / Backup VM</span>
-            <span class="badge">Fortigate</span>
-          </div>
-
-          <div class="card">
-            <h3>DevOps & Containers</h3>
-            <span class="badge">Linux</span>
-            <span class="badge">Docker / Dockerfile</span>
-            <span class="badge">Kubernetes / K3s</span>
-            <span class="badge">kubectl</span>
-            <span class="badge">Helm</span>
-            <span class="badge">ArgoCD</span>
-            <span class="badge">GitLab CI/CD</span>
-            <span class="badge">GitLab Runner</span>
-            <span class="badge">Jenkins</span>
-          </div>
-
-          <div class="card">
-            <h3>Data & Observability</h3>
-            <span class="badge">MySQL</span>
-            <span class="badge">PostgreSQL</span>
-            <span class="badge">SQLite3</span>
-            <span class="badge">Redis</span>
-            <span class="badge">Memcached</span>
-            <span class="badge">Prometheus</span>
-            <span class="badge">Grafana</span>
-            <span class="badge">Graylog</span>
-            <span class="badge">Zabbix</span>
-          </div>
-
-          <div class="card">
-            <h3>AI & Backend</h3>
-            <span class="badge">Python / Django</span>
-            <span class="badge">C# Middleware</span>
-            <span class="badge">REST API</span>
-            <span class="badge">Ollama / vLLM</span>
-            <span class="badge">AnythingLLM / OpenWebUI</span>
-            <span class="badge">n8n / Label Studio</span>
-            <span class="badge">Hugging Face</span>
-            <span class="badge">Milvus / Qdrant</span>
-            <span class="badge">RAG</span>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>3 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 4 -->
-    <section class="slide" id="slide-4">
-      <div class="slide-header">
-        <h2>目前工作聚焦：AI 系統工程師的端到端整合</h2>
-        <div class="subheader">從後端 API、AI 環境到容器化維運，支援企業內部 AI 應用場景</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-2">
-          <div class="card em">
-            <h3>目前任務範圍</h3>
-            <ul>
-              <li><span class="highlight">C# Middleware API</span> 撰寫與系統串接。</li>
-              <li><span class="highlight">Python Backend API</span> 撰寫與既有服務整合。</li>
-              <li><span class="highlight">AI 環境建置</span>：Ollama、vLLM、n8n、RAG、Milvus、Hugging Face。</li>
-              <li><span class="highlight">DevOps 自動化維運</span>：Kubernetes、Docker。</li>
-              <li><span class="highlight">Cloud 使用</span>：Azure、AWS。</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>工作價值</h3>
-            <table>
-              <tr>
-                <th>面向</th>
-                <th>可提供的價值</th>
-              </tr>
-              <tr>
-                <td>需求到工程</td>
-                <td>能理解需求限制，拆解成 API、資料流、AI 服務與維運任務。</td>
-              </tr>
-              <tr>
-                <td>平台到應用</td>
-                <td>能銜接容器、K8s、後端服務、模型服務與向量資料庫。</td>
-              </tr>
-              <tr>
-                <td>開發到維運</td>
-                <td>能用腳本、自動化、CI/CD 與監控工具降低部署與維護風險。</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>4 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 5 -->
-    <section class="slide" id="slide-5">
-      <div class="slide-header">
-        <h2>AI 應用架構經驗：Local LLM、RAG 與向量資料庫</h2>
-        <div class="subheader">以地端模型服務、文件處理與知識檢索串接企業 AI 應用</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-4">
-          <div class="card">
-            <h3>1. AI Applications</h3>
-            <p>接觸並建置 AnythingLLM、OpenWebUI、Ollama、Label Studio、n8n 等開源 AI 應用環境。</p>
-          </div>
-          <div class="card">
-            <h3>2. Backend & RAG</h3>
-            <p>參與 Django / REST API、文件 chunk、metadata 規劃寫入，作為 RAG 應用的基礎資料流程。</p>
-          </div>
-          <div class="card">
-            <h3>3. Vector DB</h3>
-            <p>具備 Milvus、Qdrant 使用經驗，理解模型、資料、後端 API 與容器平台的串接方式。</p>
-          </div>
-          <div class="card">
-            <h3>4. Model Serving</h3>
-            <p>熟悉 Ollama Server、vLLM Server、Python Server，也接觸 llama.cpp 模型轉換與量化。</p>
-          </div>
-        </div>
-
-        <div class="card purple" style="margin-top: 24px;">
-          <h3>Local LLM 實務亮點</h3>
-          <p>
-            有操作搭載雙 NVIDIA Ada 6000 GPU 的 Dell Server 進行跨 GPU local LLM 推論經驗，
-            包含 Llama 70B Instruct、Gemma、TAIDE 等模型；這讓我能從硬體資源、模型服務、後端串接與容器部署四個層面理解 AI 系統落地。
-          </p>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>5 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 6 -->
-    <section class="slide" id="slide-6">
-      <div class="slide-header">
-        <h2>DevOps 實務能力：從建置、部署到維運銜接</h2>
-        <div class="subheader">把環境建置、CI/CD、容器化與維運流程變成可重複的工程能力</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-2">
-          <div class="card">
-            <h3>CI/CD 與容器化</h3>
-            <ul>
-              <li>具備 GitLab CI/CD YAML 規劃經驗。</li>
-              <li>能撰寫 Dockerfile、進行 Image Build，並部署到 Kubernetes Cluster。</li>
-              <li>熟悉 GitLab Runner、pipeline、Docker、Kubernetes、Helm、ArgoCD 等工具。</li>
-            </ul>
-          </div>
-
-          <div class="card em">
-            <h3>Linux 與自動化</h3>
-            <ul>
-              <li>熟悉 Ubuntu、CentOS、Alpine、Debian 等 Linux 操作環境。</li>
-              <li>能使用 shell script 處理服務監控、排程、錯誤告警、MySQL 備份還原、GitLab 備份。</li>
-              <li>曾將 crontab 與 Telegram Bot 結合，在系統異常時主動通知管理者。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top: 24px;">
-          <h3>可講述的工程主軸</h3>
-          <pre># 這裡保留為「能力主軸」，不包裝成 PDF 沒寫的事故案例
-- Build: GitLab CI/CD YAML / Dockerfile / Image Build
-- Deploy: Kubernetes / Helm / ArgoCD
-- Operate: Linux command / Shell Script / Crontab / Alert Bot
-- Improve: 將重複性維運任務轉成腳本與標準流程</pre>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>6 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 7 -->
-    <section class="slide" id="slide-7">
-      <div class="slide-header">
-        <h2>資料、監控與基礎設施：支撐系統穩定運行的底層能力</h2>
-        <div class="subheader">不是只會部署服務，也能理解資料、監控、備份與硬體環境</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-3">
-          <div class="card">
-            <h3>Database</h3>
-            <ul>
-              <li>MySQL：查詢、新增、更新、刪除、排序、群組、權限、mysqldump 備份。</li>
-              <li>PostgreSQL、SQLite3、Redis、Memcached 使用經驗。</li>
-              <li>Milvus、Qdrant、Neo4j 等資料系統接觸經驗。</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Observability</h3>
-            <ul>
-              <li>Grafana、Prometheus、Graylog、Zabbix 等維運監控工具。</li>
-              <li>Line / Telegram / Discord Bot for alert。</li>
-              <li>能把系統異常轉成告警與排查線索。</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Infrastructure</h3>
-            <ul>
-              <li>Dell Server、SAN、Switch、Synology NAS。</li>
-              <li>VMware、vSphere、vCenter、ESXi、VM 備份與還原。</li>
-              <li>Fortigate、NFS、IP 權限設定。</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>7 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 8 -->
-    <section class="slide" id="slide-8">
-      <div class="slide-header">
-        <h2>Python / C# 與資料處理能力：讓 AI 與維運自動化具備工程延展性</h2>
-        <div class="subheader">以程式能力支援 API 整合、資料整理、系統自動化與 AI 任務</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-2">
-          <div class="card em">
-            <h3>Python 應用面</h3>
-            <ul>
-              <li>資料處理與視覺化：NumPy、pandas、matplotlib、CSV、JSON、XML。</li>
-              <li>自動化與爬蟲：Requests、Selenium、BeautifulSoup、subprocess、socket。</li>
-              <li>AI / ML 接觸：PyTorch、Transformers、TensorFlow、OpenCV、scikit-learn。</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Backend / Integration</h3>
-            <ul>
-              <li>Python Django / REST API 調整與 AI 應用後端串接。</li>
-              <li>C# Middleware / API 撰寫經驗。</li>
-              <li>能配合專案需求進行功能模組化、自訂 function、class 繼承與服務整合。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="quote" style="margin-top: 24px;">
-          程式能力對我來說不是只為了寫功能，而是讓維運流程、資料處理、AI 服務與系統整合可以被自動化、模組化與持續改善。
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>8 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 9 -->
-    <section class="slide" id="slide-9">
-      <div class="slide-header">
-        <h2>跨域優勢：技術落地需要的不只是工具，而是溝通與判斷</h2>
-        <div class="subheader">業務、維修、系統工程與 AI DevOps 的組合，讓技術方案更貼近現場</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-3">
-          <div class="card">
-            <h3>需求敏感度</h3>
-            <p>過去業務經驗讓我能更快理解使用者真正要解決的問題，而不是只停留在工具或技術名詞。</p>
-          </div>
-          <div class="card purple">
-            <h3>現場應變能力</h3>
-            <p>維修與系統工程背景讓我習慣面對不完整資訊，透過 log、環境、網路、服務狀態逐步縮小問題範圍。</p>
-          </div>
-          <div class="card">
-            <h3>落地導向</h3>
-            <p>我會把成本、風險、維運難度、交期與團隊熟悉度納入技術選型，而不是單純追求最新工具。</p>
-          </div>
-        </div>
-
-        <table style="margin-top: 26px;">
-          <tr>
-            <th>跨域背景</th>
-            <th>轉化成工程價值</th>
-          </tr>
-          <tr>
-            <td>業務與客戶接觸</td>
-            <td>需求釐清、溝通協調、降低工程與業務認知落差。</td>
-          </tr>
-          <tr>
-            <td>硬體維修與機房管理</td>
-            <td>能理解實體設備、網路、VM、NAS、Server 與應用服務的關聯。</td>
-          </tr>
-          <tr>
-            <td>DevOps 與 AI 系統工程</td>
-            <td>能將後端 API、容器平台、AI 模型服務、資料庫與監控告警整合成可運行方案。</td>
-          </tr>
-        </table>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>9 / 10</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 10 -->
-    <section class="slide" id="slide-10">
-      <div class="slide-header">
-        <h2>下一階段目標：DevOps + AI Infrastructure + MLOps</h2>
-        <div class="subheader">持續深化 IaC、資料整理、Dataset 建立與 AI 維運流程</div>
-      </div>
-      <div class="slide-content">
-        <div class="grid-3">
-          <div class="card">
-            <h3>持續深化 IaC</h3>
-            <p>未來希望累積 Terraform 與 IaC 能力，讓基礎設施變更更可追蹤、可重複、可驗證。</p>
-          </div>
-          <div class="card em">
-            <h3>強化資料與 MLOps</h3>
-            <p>聚焦系統訊息蒐集、資料整理、Dataset 建立，以及結合 Python、scikit-learn 或 LLM 的流程設計。</p>
-          </div>
-          <div class="card">
-            <h3>AI 與維運結合</h3>
-            <p>將 AI 工具導入維運、知識檢索、告警整理、文件處理與內部效率提升，創造更高工作價值。</p>
-          </div>
-        </div>
-
-        <div class="card purple" style="margin-top: 30px; text-align: center;">
-          <h3 style="font-size: 20pt;">Fred Yeh (葉紹棠)</h3>
-          <p class="muted" style="margin-bottom: 14px;">DevOps / AI System Engineer / Cloud Operations Development</p>
-          <p>
-            Email：<span class="highlight">elvisyah@gmail.com</span>
-            &nbsp;｜&nbsp;
-            GitHub：<span class="highlight">github.com/fredyah/myDemoProjects</span>
-          </p>
-          <div class="interview-cta-wrap">
-            <a href="q1-q6.html" class="interview-cta">AI DevOps Engineer Interview Assignment</a>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>Fred Yeh | 面試簡報</span>
-        <span>10 / 10</span>
-      </div>
-    </section>
-
   </div>
 
   <audio id="slideAudio" preload="metadata"></audio>
 
   <script>
+    const deckContent = {
+      "zh": [
+            {
+                  "cover": true,
+                  "footerLeft": "Fred Yeh | elvisyah@gmail.com",
+                  "content": "\n        <div class=\"cover-wrap\">\n          <h1 class=\"cover-title\">現代雲端架構與<br>AI 系統落地實踐</h1>\n          <p class=\"cover-subtitle\">\n            Fred Yeh (葉紹棠) — DevOps / AI 系統工程師<br>\n            以 Linux、Kubernetes、後端 API、自動化與 Local LLM 經驗，支撐企業 AI 應用落地。\n          </p>\n\n          <div class=\"grid-2\">\n            <div class=\"card em\">\n              <h3>職務角色</h3>\n              <p>AI 系統工程師，負責 Python / C# API、AI 環境建置、K8s / Docker 自動化維運，以及 Azure / AWS 使用。</p>\n            </div>\n            <div class=\"card\">\n              <h3>核心定位</h3>\n              <p>不是單點工具操作，而是從需求、開發、部署、監控到維運的端到端整合型工程能力。</p>\n            </div>\n          </div>\n\n          <div class=\"metric-row\">\n            <div class=\"metric\"><div class=\"num\">16+</div><div class=\"label\">年跨領域工作經驗</div></div>\n            <div class=\"metric\"><div class=\"num\">DevOps</div><div class=\"label\">K8s、Docker、CI/CD、監控告警</div></div>\n            <div class=\"metric\"><div class=\"num\">AI</div><div class=\"label\">Ollama、vLLM、RAG、Milvus</div></div>\n            <div class=\"metric\"><div class=\"num\">Infra</div><div class=\"label\">Cloud + On-Prem + Server</div></div>\n          </div>\n        </div>\n      "
+            },
+            {
+                  "title": "職涯定位：從第一線溝通到 AI 系統工程落地",
+                  "subheader": "把跨領域歷練轉化為需求理解、問題拆解與系統整合能力",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"timeline\">\n          <div class=\"card timeline-card\"><h3>業務與現場經驗</h3><p class=\"muted\">國內業務、房仲、保險業務</p><ul><li>建立客戶溝通、需求釐清、跨部門協調能力。</li><li>能理解技術方案背後的成本、交期與使用者需求。</li></ul></div>\n          <div class=\"card timeline-card\"><h3>硬體與系統基礎</h3><p class=\"muted\">維修工程師、系統工程師</p><ul><li>熟悉 Linux、NGINX、雲端基礎服務與地端機房場景。</li><li>理解硬體、網路、VM、NAS 與服務部署之間的關聯。</li></ul></div>\n          <div class=\"card timeline-card\"><h3>DevOps 與平台維運</h3><p class=\"muted\">K8s、Docker、CI/CD、監控告警</p><ul><li>具備 GitLab Runner、Dockerfile、Pipeline、Kubernetes、Grafana、Prometheus 等經驗。</li><li>能以腳本、自動化與告警機制降低人工維運成本。</li></ul></div>\n          <div class=\"card timeline-card\"><h3>AI 系統工程</h3><p class=\"muted\">Local LLM、RAG、Backend API</p><ul><li>建置 Ollama、vLLM、n8n、RAG、Milvus、Hugging Face 相關環境。</li><li>參與 Python / C# API 與 AI 應用後端整合。</li></ul></div>\n        </div>\n        <div class=\"quote\" style=\"margin-top: 26px;\">我的優勢不是只會某一套工具，而是能把「需求、基礎設施、後端 API、容器平台、AI 模型與維運流程」串成可落地的系統方案。</div>\n      "
+            },
+            {
+                  "title": "技術矩陣：支撐 DevOps 與 AI 應用的實務工具箱",
+                  "subheader": "以履歷中實際出現的工具與經驗整理，不硬加無佐證案例",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-4\">\n          <div class=\"card\"><h3>Cloud & On-Prem</h3><span class=\"badge\">AWS</span><span class=\"badge\">Azure</span><span class=\"badge\">GCP</span><span class=\"badge\">AliYun</span><span class=\"badge\">Tencent Cloud</span><span class=\"badge\">VMware / vSphere / ESXi</span><span class=\"badge\">Dell Server / SAN / Switch</span><span class=\"badge\">NAS / Backup VM</span><span class=\"badge\">Fortigate</span></div>\n          <div class=\"card\"><h3>DevOps & Containers</h3><span class=\"badge\">Linux</span><span class=\"badge\">Docker / Dockerfile</span><span class=\"badge\">Kubernetes / K3s</span><span class=\"badge\">kubectl</span><span class=\"badge\">Helm</span><span class=\"badge\">ArgoCD</span><span class=\"badge\">GitLab CI/CD</span><span class=\"badge\">GitLab Runner</span><span class=\"badge\">Jenkins</span></div>\n          <div class=\"card\"><h3>Data & Observability</h3><span class=\"badge\">MySQL</span><span class=\"badge\">PostgreSQL</span><span class=\"badge\">SQLite3</span><span class=\"badge\">Redis</span><span class=\"badge\">Memcached</span><span class=\"badge\">Prometheus</span><span class=\"badge\">Grafana</span><span class=\"badge\">Graylog</span><span class=\"badge\">Zabbix</span></div>\n          <div class=\"card\"><h3>AI & Backend</h3><span class=\"badge\">Python / Django</span><span class=\"badge\">C# Middleware</span><span class=\"badge\">REST API</span><span class=\"badge\">Ollama / vLLM</span><span class=\"badge\">AnythingLLM / OpenWebUI</span><span class=\"badge\">n8n / Label Studio</span><span class=\"badge\">Hugging Face</span><span class=\"badge\">Milvus / Qdrant</span><span class=\"badge\">RAG</span></div>\n        </div>\n      "
+            },
+            {
+                  "title": "目前工作聚焦：AI 系統工程師的端到端整合",
+                  "subheader": "從後端 API、AI 環境到容器化維運，支援企業內部 AI 應用場景",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-2\">\n          <div class=\"card em\"><h3>目前任務範圍</h3><ul><li><span class=\"highlight\">C# Middleware API</span> 撰寫與系統串接。</li><li><span class=\"highlight\">Python Backend API</span> 撰寫與既有服務整合。</li><li><span class=\"highlight\">AI 環境建置</span>：Ollama、vLLM、n8n、RAG、Milvus、Hugging Face。</li><li><span class=\"highlight\">DevOps 自動化維運</span>：Kubernetes、Docker。</li><li><span class=\"highlight\">Cloud 使用</span>：Azure、AWS。</li></ul></div>\n          <div class=\"card\"><h3>工作價值</h3><table><tr><th>面向</th><th>可提供的價值</th></tr><tr><td>需求到工程</td><td>能理解需求限制，拆解成 API、資料流、AI 服務與維運任務。</td></tr><tr><td>平台到應用</td><td>能銜接容器、K8s、後端服務、模型服務與向量資料庫。</td></tr><tr><td>開發到維運</td><td>能用腳本、自動化、CI/CD 與監控工具降低部署與維護風險。</td></tr></table></div>\n        </div>\n      "
+            },
+            {
+                  "title": "AI 應用架構經驗：Local LLM、RAG 與向量資料庫",
+                  "subheader": "以地端模型服務、文件處理與知識檢索串接企業 AI 應用",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-4\"><div class=\"card\"><h3>1. AI Applications</h3><p>接觸並建置 AnythingLLM、OpenWebUI、Ollama、Label Studio、n8n 等開源 AI 應用環境。</p></div><div class=\"card\"><h3>2. Backend & RAG</h3><p>參與 Django / REST API、文件 chunk、metadata 規劃寫入，作為 RAG 應用的基礎資料流程。</p></div><div class=\"card\"><h3>3. Vector DB</h3><p>具備 Milvus、Qdrant 使用經驗，理解模型、資料、後端 API 與容器平台的串接方式。</p></div><div class=\"card\"><h3>4. Model Serving</h3><p>熟悉 Ollama Server、vLLM Server、Python Server，也接觸 llama.cpp 模型轉換與量化。</p></div></div>\n        <div class=\"card purple\" style=\"margin-top: 24px;\"><h3>Local LLM 實務亮點</h3><p>有操作搭載雙 NVIDIA Ada 6000 GPU 的 Dell Server 進行跨 GPU local LLM 推論經驗，包含 Llama 70B Instruct、Gemma、TAIDE 等模型；這讓我能從硬體資源、模型服務、後端串接與容器部署四個層面理解 AI 系統落地。</p></div>\n      "
+            },
+            {
+                  "title": "DevOps 實務能力：從建置、部署到維運銜接",
+                  "subheader": "把環境建置、CI/CD、容器化與維運流程變成可重複的工程能力",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-2\"><div class=\"card\"><h3>CI/CD 與容器化</h3><ul><li>具備 GitLab CI/CD YAML 規劃經驗。</li><li>能撰寫 Dockerfile、進行 Image Build，並部署到 Kubernetes Cluster。</li><li>熟悉 GitLab Runner、pipeline、Docker、Kubernetes、Helm、ArgoCD 等工具。</li></ul></div><div class=\"card em\"><h3>Linux 與自動化</h3><ul><li>熟悉 Ubuntu、CentOS、Alpine、Debian 等 Linux 操作環境。</li><li>能使用 shell script 處理服務監控、排程、錯誤告警、MySQL 備份還原、GitLab 備份。</li><li>曾將 crontab 與 Telegram Bot 結合，在系統異常時主動通知管理者。</li></ul></div></div>\n        <div class=\"card\" style=\"margin-top: 24px;\"><h3>可講述的工程主軸</h3><pre># 這裡保留為「能力主軸」，不包裝成 PDF 沒寫的事故案例\n- Build: GitLab CI/CD YAML / Dockerfile / Image Build\n- Deploy: Kubernetes / Helm / ArgoCD\n- Operate: Linux command / Shell Script / Crontab / Alert Bot\n- Improve: 將重複性維運任務轉成腳本與標準流程</pre></div>\n      "
+            },
+            {
+                  "title": "資料、監控與基礎設施：支撐系統穩定運行的底層能力",
+                  "subheader": "不是只會部署服務，也能理解資料、監控、備份與硬體環境",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>Database</h3><ul><li>MySQL：查詢、新增、更新、刪除、排序、群組、權限、mysqldump 備份。</li><li>PostgreSQL、SQLite3、Redis、Memcached 使用經驗。</li><li>Milvus、Qdrant、Neo4j 等資料系統接觸經驗。</li></ul></div><div class=\"card\"><h3>Observability</h3><ul><li>Grafana、Prometheus、Graylog、Zabbix 等維運監控工具。</li><li>Line / Telegram / Discord Bot for alert。</li><li>能把系統異常轉成告警與排查線索。</li></ul></div><div class=\"card\"><h3>Infrastructure</h3><ul><li>Dell Server、SAN、Switch、Synology NAS。</li><li>VMware、vSphere、vCenter、ESXi、VM 備份與還原。</li><li>Fortigate、NFS、IP 權限設定。</li></ul></div></div>\n      "
+            },
+            {
+                  "title": "Python / C# 與資料處理能力：讓 AI 與維運自動化具備工程延展性",
+                  "subheader": "以程式能力支援 API 整合、資料整理、系統自動化與 AI 任務",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-2\"><div class=\"card em\"><h3>Python 應用面</h3><ul><li>資料處理與視覺化：NumPy、pandas、matplotlib、CSV、JSON、XML。</li><li>自動化與爬蟲：Requests、Selenium、BeautifulSoup、subprocess、socket。</li><li>AI / ML 接觸：PyTorch、Transformers、TensorFlow、OpenCV、scikit-learn。</li></ul></div><div class=\"card\"><h3>Backend / Integration</h3><ul><li>Python Django / REST API 調整與 AI 應用後端串接。</li><li>C# Middleware / API 撰寫經驗。</li><li>能配合專案需求進行功能模組化、自訂 function、class 繼承與服務整合。</li></ul></div></div>\n        <div class=\"quote\" style=\"margin-top: 24px;\">程式能力對我來說不是只為了寫功能，而是讓維運流程、資料處理、AI 服務與系統整合可以被自動化、模組化與持續改善。</div>\n      "
+            },
+            {
+                  "title": "跨域優勢：技術落地需要的不只是工具，而是溝通與判斷",
+                  "subheader": "業務、維修、系統工程與 AI DevOps 的組合，讓技術方案更貼近現場",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>需求敏感度</h3><p>過去業務經驗讓我能更快理解使用者真正要解決的問題，而不是只停留在工具或技術名詞。</p></div><div class=\"card purple\"><h3>現場應變能力</h3><p>維修與系統工程背景讓我習慣面對不完整資訊，透過 log、環境、網路、服務狀態逐步縮小問題範圍。</p></div><div class=\"card\"><h3>落地導向</h3><p>我會把成本、風險、維運難度、交期與團隊熟悉度納入技術選型，而不是單純追求最新工具。</p></div></div>\n        <table style=\"margin-top: 26px;\"><tr><th>跨域背景</th><th>轉化成工程價值</th></tr><tr><td>業務與客戶接觸</td><td>需求釐清、溝通協調、降低工程與業務認知落差。</td></tr><tr><td>硬體維修與機房管理</td><td>能理解實體設備、網路、VM、NAS、Server 與應用服務的關聯。</td></tr><tr><td>DevOps 與 AI 系統工程</td><td>能將後端 API、容器平台、AI 模型服務、資料庫與監控告警整合成可運行方案。</td></tr></table>\n      "
+            },
+            {
+                  "title": "下一階段目標：DevOps + AI Infrastructure + MLOps",
+                  "subheader": "持續深化 IaC、資料整理、Dataset 建立與 AI 維運流程",
+                  "footerLeft": "Fred Yeh | 面試簡報",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>持續深化 IaC</h3><p>未來希望累積 Terraform 與 IaC 能力，讓基礎設施變更更可追蹤、可重複、可驗證。</p></div><div class=\"card em\"><h3>強化資料與 MLOps</h3><p>聚焦系統訊息蒐集、資料整理、Dataset 建立，以及結合 Python、scikit-learn 或 LLM 的流程設計。</p></div><div class=\"card\"><h3>AI 與維運結合</h3><p>將 AI 工具導入維運、知識檢索、告警整理、文件處理與內部效率提升，創造更高工作價值。</p></div></div>\n        <div class=\"card purple\" style=\"margin-top: 30px; text-align: center;\"><h3 style=\"font-size: 20pt;\">Fred Yeh (葉紹棠)</h3><p class=\"muted\" style=\"margin-bottom: 14px;\">DevOps / AI System Engineer / Cloud Operations Development</p><p>Email：<span class=\"highlight\">elvisyah@gmail.com</span>&nbsp;｜&nbsp;GitHub：<span class=\"highlight\">github.com/fredyah/myDemoProjects</span></p><div class=\"interview-cta-wrap\"><a href=\"q1-q6.html\" class=\"interview-cta\">AI DevOps Engineer Interview Assignment</a></div></div>\n      "
+            }
+      ],
+      "en": [
+            {
+                  "cover": true,
+                  "footerLeft": "Fred Yeh | elvisyah@gmail.com",
+                  "content": "\n        <div class=\"cover-wrap\">\n          <h1 class=\"cover-title\">Modern Cloud Architecture<br>and Practical AI System Delivery</h1>\n          <p class=\"cover-subtitle\">\n            Fred Yeh — DevOps / AI System Engineer<br>\n            I support enterprise AI adoption with hands-on experience in Linux, Kubernetes, backend APIs, automation, and local LLM environments.\n          </p>\n\n          <div class=\"grid-2\">\n            <div class=\"card em\">\n              <h3>Professional Role</h3>\n              <p>AI System Engineer responsible for Python / C# APIs, AI environment setup, Kubernetes / Docker automation, and practical Azure / AWS usage.</p>\n            </div>\n            <div class=\"card\">\n              <h3>Core Positioning</h3>\n              <p>My strength is not limited to operating individual tools. I focus on end-to-end engineering, from requirements and development to deployment, monitoring, and operations.</p>\n            </div>\n          </div>\n\n          <div class=\"metric-row\">\n            <div class=\"metric\"><div class=\"num\">16+</div><div class=\"label\">Years of cross-domain work experience</div></div>\n            <div class=\"metric\"><div class=\"num\">DevOps</div><div class=\"label\">K8s, Docker, CI/CD, monitoring and alerting</div></div>\n            <div class=\"metric\"><div class=\"num\">AI</div><div class=\"label\">Ollama, vLLM, RAG, Milvus</div></div>\n            <div class=\"metric\"><div class=\"num\">Infra</div><div class=\"label\">Cloud, on-premises, and server environments</div></div>\n          </div>\n        </div>\n      "
+            },
+            {
+                  "title": "Career Positioning: From Front-Line Communication to AI System Delivery",
+                  "subheader": "Turning cross-domain experience into requirements understanding, problem decomposition, and system integration capabilities",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"timeline\">\n          <div class=\"card timeline-card\"><h3>Sales and Field Experience</h3><p class=\"muted\">Domestic sales, real estate, and insurance sales</p><ul><li>Built strong capabilities in customer communication, requirements clarification, and cross-functional coordination.</li><li>Understand the cost, timeline, and user needs behind technical solutions.</li></ul></div>\n          <div class=\"card timeline-card\"><h3>Hardware and System Foundation</h3><p class=\"muted\">Repair engineer and system engineer</p><ul><li>Hands-on experience with Linux, NGINX, cloud foundation services, and on-premises data center scenarios.</li><li>Understand the relationship between hardware, networking, VMs, NAS, and service deployment.</li></ul></div>\n          <div class=\"card timeline-card\"><h3>DevOps and Platform Operations</h3><p class=\"muted\">K8s, Docker, CI/CD, monitoring and alerting</p><ul><li>Experience with GitLab Runner, Dockerfile, pipelines, Kubernetes, Grafana, and Prometheus.</li><li>Use scripting, automation, and alerting mechanisms to reduce repetitive operational workload.</li></ul></div>\n          <div class=\"card timeline-card\"><h3>AI System Engineering</h3><p class=\"muted\">Local LLM, RAG, Backend APIs</p><ul><li>Set up environments for Ollama, vLLM, n8n, RAG, Milvus, and Hugging Face related workflows.</li><li>Participated in backend integration for Python / C# APIs and AI applications.</li></ul></div>\n        </div>\n        <div class=\"quote\" style=\"margin-top: 26px;\">My value is not only in knowing a specific tool, but in connecting requirements, infrastructure, backend APIs, container platforms, AI models, and operations into systems that can be delivered and maintained.</div>\n      "
+            },
+            {
+                  "title": "Technical Matrix: A Practical Toolkit for DevOps and AI Applications",
+                  "subheader": "Organized based on actual tools and experience from my resume, without overstating unsupported project cases",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-4\">\n          <div class=\"card\"><h3>Cloud & On-Prem</h3><span class=\"badge\">AWS</span><span class=\"badge\">Azure</span><span class=\"badge\">GCP</span><span class=\"badge\">AliYun</span><span class=\"badge\">Tencent Cloud</span><span class=\"badge\">VMware / vSphere / ESXi</span><span class=\"badge\">Dell Server / SAN / Switch</span><span class=\"badge\">NAS / Backup VM</span><span class=\"badge\">Fortigate</span></div>\n          <div class=\"card\"><h3>DevOps & Containers</h3><span class=\"badge\">Linux</span><span class=\"badge\">Docker / Dockerfile</span><span class=\"badge\">Kubernetes / K3s</span><span class=\"badge\">kubectl</span><span class=\"badge\">Helm</span><span class=\"badge\">ArgoCD</span><span class=\"badge\">GitLab CI/CD</span><span class=\"badge\">GitLab Runner</span><span class=\"badge\">Jenkins</span></div>\n          <div class=\"card\"><h3>Data & Observability</h3><span class=\"badge\">MySQL</span><span class=\"badge\">PostgreSQL</span><span class=\"badge\">SQLite3</span><span class=\"badge\">Redis</span><span class=\"badge\">Memcached</span><span class=\"badge\">Prometheus</span><span class=\"badge\">Grafana</span><span class=\"badge\">Graylog</span><span class=\"badge\">Zabbix</span></div>\n          <div class=\"card\"><h3>AI & Backend</h3><span class=\"badge\">Python / Django</span><span class=\"badge\">C# Middleware</span><span class=\"badge\">REST API</span><span class=\"badge\">Ollama / vLLM</span><span class=\"badge\">AnythingLLM / OpenWebUI</span><span class=\"badge\">n8n / Label Studio</span><span class=\"badge\">Hugging Face</span><span class=\"badge\">Milvus / Qdrant</span><span class=\"badge\">RAG</span></div>\n        </div>\n      "
+            },
+            {
+                  "title": "Current Focus: End-to-End Integration as an AI System Engineer",
+                  "subheader": "Supporting enterprise AI use cases through backend APIs, AI environments, and containerized operations",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-2\">\n          <div class=\"card em\"><h3>Current Scope</h3><ul><li><span class=\"highlight\">C# Middleware APIs</span> for system integration.</li><li><span class=\"highlight\">Python Backend APIs</span> and integration with existing services.</li><li><span class=\"highlight\">AI Environment Setup</span>: Ollama, vLLM, n8n, RAG, Milvus, and Hugging Face.</li><li><span class=\"highlight\">DevOps Automation and Operations</span>: Kubernetes and Docker.</li><li><span class=\"highlight\">Cloud Usage</span>: Azure and AWS.</li></ul></div>\n          <div class=\"card\"><h3>Value I Bring</h3><table><tr><th>Area</th><th>Practical Value</th></tr><tr><td>Requirements to Engineering</td><td>Translate constraints into APIs, data flows, AI services, and operational tasks.</td></tr><tr><td>Platform to Application</td><td>Connect containers, Kubernetes, backend services, model serving, and vector databases.</td></tr><tr><td>Development to Operations</td><td>Use scripting, automation, CI/CD, and monitoring to reduce deployment and maintenance risk.</td></tr></table></div>\n        </div>\n      "
+            },
+            {
+                  "title": "AI Application Architecture: Local LLM, RAG, and Vector Databases",
+                  "subheader": "Connecting local model serving, document processing, and knowledge retrieval for enterprise AI applications",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-4\"><div class=\"card\"><h3>1. AI Applications</h3><p>Worked with and set up open-source AI application environments such as AnythingLLM, OpenWebUI, Ollama, Label Studio, and n8n.</p></div><div class=\"card\"><h3>2. Backend & RAG</h3><p>Participated in Django / REST API work, document chunking, and metadata planning as part of the data foundation for RAG applications.</p></div><div class=\"card\"><h3>3. Vector DB</h3><p>Hands-on experience with Milvus and Qdrant, and a practical understanding of how models, data, backend APIs, and container platforms connect.</p></div><div class=\"card\"><h3>4. Model Serving</h3><p>Familiar with Ollama Server, vLLM Server, and Python Server, with exposure to llama.cpp model conversion and quantization.</p></div></div>\n        <div class=\"card purple\" style=\"margin-top: 24px;\"><h3>Local LLM Practical Highlight</h3><p>I have operated a Dell Server with dual NVIDIA Ada 6000 GPUs for cross-GPU local LLM inference, including models such as Llama 70B Instruct, Gemma, and TAIDE. This helped me understand AI system delivery from four angles: hardware resources, model serving, backend integration, and container deployment.</p></div>\n      "
+            },
+            {
+                  "title": "DevOps Practice: From Setup and Deployment to Operations",
+                  "subheader": "Turning environment setup, CI/CD, containerization, and operations into repeatable engineering workflows",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-2\"><div class=\"card\"><h3>CI/CD and Containerization</h3><ul><li>Experience planning GitLab CI/CD YAML workflows.</li><li>Able to write Dockerfiles, build images, and deploy them to Kubernetes clusters.</li><li>Familiar with GitLab Runner, pipelines, Docker, Kubernetes, Helm, and ArgoCD.</li></ul></div><div class=\"card em\"><h3>Linux and Automation</h3><ul><li>Familiar with Linux environments including Ubuntu, CentOS, Alpine, and Debian.</li><li>Use shell scripts for service monitoring, scheduling, error alerting, MySQL backup and restore, and GitLab backup.</li><li>Integrated crontab with a Telegram Bot to proactively notify administrators when system issues occur.</li></ul></div></div>\n        <div class=\"card\" style=\"margin-top: 24px;\"><h3>Engineering Themes I Can Discuss</h3><pre># Kept as capability themes, not exaggerated into unsupported incident stories\n- Build: GitLab CI/CD YAML / Dockerfile / Image Build\n- Deploy: Kubernetes / Helm / ArgoCD\n- Operate: Linux command / Shell Script / Crontab / Alert Bot\n- Improve: Turn repetitive operations into scripts and standard procedures</pre></div>\n      "
+            },
+            {
+                  "title": "Data, Observability, and Infrastructure: Foundations for Stable Systems",
+                  "subheader": "Beyond deployment, I also understand data systems, monitoring, backup, and hardware environments",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>Database</h3><ul><li>MySQL: query, insert, update, delete, sorting, grouping, permissions, and mysqldump backup.</li><li>Experience with PostgreSQL, SQLite3, Redis, and Memcached.</li><li>Exposure to data systems such as Milvus, Qdrant, and Neo4j.</li></ul></div><div class=\"card\"><h3>Observability</h3><ul><li>Operational monitoring tools such as Grafana, Prometheus, Graylog, and Zabbix.</li><li>Line / Telegram / Discord Bot for alerting.</li><li>Can turn system anomalies into alerts and useful troubleshooting clues.</li></ul></div><div class=\"card\"><h3>Infrastructure</h3><ul><li>Dell Server, SAN, Switch, and Synology NAS.</li><li>VMware, vSphere, vCenter, ESXi, VM backup and restore.</li><li>Fortigate, NFS, and IP-based access control.</li></ul></div></div>\n      "
+            },
+            {
+                  "title": "Python / C# and Data Processing: Extending AI and Operations Automation",
+                  "subheader": "Using programming skills to support API integration, data preparation, system automation, and AI-related tasks",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-2\"><div class=\"card em\"><h3>Python Applications</h3><ul><li>Data processing and visualization: NumPy, pandas, matplotlib, CSV, JSON, and XML.</li><li>Automation and web scraping: Requests, Selenium, BeautifulSoup, subprocess, and socket.</li><li>AI / ML exposure: PyTorch, Transformers, TensorFlow, OpenCV, and scikit-learn.</li></ul></div><div class=\"card\"><h3>Backend / Integration</h3><ul><li>Python Django / REST API adjustments and backend integration for AI applications.</li><li>Experience writing C# Middleware / APIs.</li><li>Able to modularize features, customize functions, apply class inheritance, and integrate services based on project needs.</li></ul></div></div>\n        <div class=\"quote\" style=\"margin-top: 24px;\">For me, programming is not only about writing features. It is a way to make operations, data processing, AI services, and system integration more automated, modular, and continuously improvable.</div>\n      "
+            },
+            {
+                  "title": "Cross-Domain Strength: Delivery Requires More Than Tools",
+                  "subheader": "The combination of sales, repair, system engineering, and AI DevOps helps me keep technical solutions close to real-world needs",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>Requirements Sensitivity</h3><p>My previous sales experience helps me understand the real problem users want to solve, instead of staying only at the level of tools or technical terms.</p></div><div class=\"card purple\"><h3>On-Site Problem Solving</h3><p>My repair and system engineering background trained me to work with incomplete information and narrow down issues through logs, environments, networks, and service status.</p></div><div class=\"card\"><h3>Delivery-Oriented Mindset</h3><p>I consider cost, risk, operational complexity, timeline, and team familiarity when choosing technologies, rather than simply chasing the newest tool.</p></div></div>\n        <table style=\"margin-top: 26px;\"><tr><th>Cross-Domain Background</th><th>Engineering Value</th></tr><tr><td>Sales and customer-facing work</td><td>Clarify requirements, coordinate communication, and reduce the gap between business and engineering expectations.</td></tr><tr><td>Hardware repair and data center operations</td><td>Understand the relationship between physical equipment, networking, VMs, NAS, servers, and application services.</td></tr><tr><td>DevOps and AI system engineering</td><td>Integrate backend APIs, container platforms, AI model serving, databases, and monitoring into runnable solutions.</td></tr></table>\n      "
+            },
+            {
+                  "title": "Next-Stage Goals: DevOps + AI Infrastructure + MLOps",
+                  "subheader": "Continuing to deepen IaC, data preparation, dataset building, and AI operations workflows",
+                  "footerLeft": "Fred Yeh | Interview Deck",
+                  "content": "\n        <div class=\"grid-3\"><div class=\"card\"><h3>Deepen IaC Practice</h3><p>I would like to keep strengthening Terraform and IaC capabilities so infrastructure changes become more traceable, repeatable, and verifiable.</p></div><div class=\"card em\"><h3>Strengthen Data and MLOps</h3><p>Focus on system information collection, data preparation, dataset building, and workflow design using Python, scikit-learn, or LLMs.</p></div><div class=\"card\"><h3>Combine AI with Operations</h3><p>Apply AI tools to operations, knowledge retrieval, alert summarization, document processing, and internal productivity improvements.</p></div></div>\n        <div class=\"card purple\" style=\"margin-top: 30px; text-align: center;\"><h3 style=\"font-size: 20pt;\">Fred Yeh</h3><p class=\"muted\" style=\"margin-bottom: 14px;\">DevOps / AI System Engineer / Cloud Operations Development</p><p>Email: <span class=\"highlight\">elvisyah@gmail.com</span>&nbsp;|&nbsp;GitHub: <span class=\"highlight\">github.com/fredyah/myDemoProjects</span></p><div class=\"interview-cta-wrap\"><a href=\"q1-q6.html\" class=\"interview-cta\">AI DevOps Engineer Interview Assignment</a></div></div>\n      "
+            }
+      ]
+};
+    const deckLabels = {
+      "zh": {
+            "title": "Fred Yeh 技術面試簡報 - DevOps / AI System Engineer",
+            "audioOn": "語音：開",
+            "audioOff": "語音：關",
+            "prev": "上一頁",
+            "next": "下一頁",
+            "zh": "中文",
+            "en": "English"
+      },
+      "en": {
+            "title": "Fred Yeh Technical Interview Deck - DevOps / AI System Engineer",
+            "audioOn": "Audio: On",
+            "audioOff": "Audio: Off",
+            "prev": "Previous",
+            "next": "Next",
+            "zh": "中文",
+            "en": "English"
+      }
+};
+
     let currentSlide = 1;
     const totalSlides = 10;
     const AUDIO_BASE = './audio';
     const AUDIO_AUTOPLAY_KEY = 'deck-audio-autoplay';
+    const LANGUAGE_KEY = 'deck-language';
+
+    const slide = document.getElementById('slide');
+    const slideHeader = document.getElementById('slideHeader');
+    const slideTitle = document.getElementById('slideTitle');
+    const slideSubheader = document.getElementById('slideSubheader');
+    const slideContent = document.getElementById('slideContent');
     const slideAudio = document.getElementById('slideAudio');
+    const footerLeft = document.getElementById('footerLeft');
+    const footerPage = document.getElementById('footerPage');
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const langZhBtn = document.getElementById('langZhBtn');
+    const langEnBtn = document.getElementById('langEnBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentLanguage = localStorage.getItem(LANGUAGE_KEY) || 'zh';
     let isSlideAudioEnabled = true;
-    let loadedAudioSlide = 0;
+    let loadedAudioKey = '';
+
+    function getLabels() {
+      return deckLabels[currentLanguage];
+    }
 
     function slideAudioPath(index) {
-      return `${AUDIO_BASE}/Slide_${index}.wav`;
+      const filename = currentLanguage === 'en' ? `Slide_en_${index}.wav` : `Slide_${index}.wav`;
+      return `${AUDIO_BASE}/${filename}`;
     }
 
     function stopSlideAudio() {
@@ -909,36 +542,60 @@
       if (!isSlideAudioEnabled) return;
 
       stopSlideAudio();
+      const audioKey = `${currentLanguage}-${index}`;
 
-      if (loadedAudioSlide !== index) {
+      if (loadedAudioKey !== audioKey) {
         slideAudio.src = slideAudioPath(index);
-        loadedAudioSlide = index;
+        loadedAudioKey = audioKey;
       }
 
       slideAudio.play().catch(() => {});
     }
 
-    function updateAudioToggleUI() {
-      document.querySelectorAll('.audio-toggle-btn').forEach((btn) => {
-        btn.textContent = isSlideAudioEnabled ? '語音：開' : '語音：關';
-        btn.setAttribute('aria-pressed', String(isSlideAudioEnabled));
-      });
+    function updateButtons() {
+      const t = getLabels();
+      audioToggleBtn.textContent = isSlideAudioEnabled ? t.audioOn : t.audioOff;
+      audioToggleBtn.setAttribute('aria-pressed', String(isSlideAudioEnabled));
+      prevBtn.textContent = t.prev;
+      nextBtn.textContent = t.next;
+      langZhBtn.textContent = t.zh;
+      langEnBtn.textContent = t.en;
+      langZhBtn.classList.toggle('active-lang', currentLanguage === 'zh');
+      langEnBtn.classList.toggle('active-lang', currentLanguage === 'en');
+      langZhBtn.setAttribute('aria-pressed', String(currentLanguage === 'zh'));
+      langEnBtn.setAttribute('aria-pressed', String(currentLanguage === 'en'));
+      document.title = t.title;
     }
 
-    function initSlideAudioPreference() {
-      const stored = localStorage.getItem(AUDIO_AUTOPLAY_KEY);
-      isSlideAudioEnabled = stored === null ? true : stored === 'on';
-      updateAudioToggleUI();
+    function renderSlide(index) {
+      const data = deckContent[currentLanguage][index - 1];
+      document.documentElement.lang = currentLanguage === 'zh' ? 'zh-TW' : 'en';
+
+      if (data.cover) {
+        slideHeader.classList.add('hidden');
+        slideTitle.textContent = '';
+        slideSubheader.textContent = '';
+      } else {
+        slideHeader.classList.remove('hidden');
+        slideTitle.textContent = data.title;
+        slideSubheader.textContent = data.subheader;
+      }
+
+      slideContent.innerHTML = data.content;
+      footerLeft.textContent = data.footerLeft;
+      footerPage.textContent = `${index} / ${totalSlides}`;
+      updateButtons();
     }
 
-    function showSlide(index) {
+    function showSlide(index, shouldPlayAudio = true) {
       if (index < 1 || index > totalSlides) return;
-      const active = document.querySelector('.slide.active');
-      if (active) active.classList.remove('active');
-      const next = document.getElementById(`slide-${index}`);
-      if (next) next.classList.add('active');
-      currentSlide = index;
-      playSlideAudio(index);
+      slide.classList.add('is-changing');
+      setTimeout(() => {
+        currentSlide = index;
+        renderSlide(index);
+        slide.classList.remove('is-changing');
+        if (shouldPlayAudio) playSlideAudio(index);
+      }, 120);
     }
 
     function nextSlide() {
@@ -949,35 +606,50 @@
       if (currentSlide > 1) showSlide(currentSlide - 1);
     }
 
+    function setLanguage(lang) {
+      if (!deckContent[lang] || lang === currentLanguage) return;
+      currentLanguage = lang;
+      localStorage.setItem(LANGUAGE_KEY, lang);
+      loadedAudioKey = '';
+      stopSlideAudio();
+      showSlide(currentSlide, true);
+    }
+
+    function initSlideAudioPreference() {
+      const stored = localStorage.getItem(AUDIO_AUTOPLAY_KEY);
+      isSlideAudioEnabled = stored === null ? true : stored === 'on';
+      updateButtons();
+    }
+
+    audioToggleBtn.addEventListener('click', () => {
+      isSlideAudioEnabled = !isSlideAudioEnabled;
+      localStorage.setItem(AUDIO_AUTOPLAY_KEY, isSlideAudioEnabled ? 'on' : 'off');
+      updateButtons();
+      if (!isSlideAudioEnabled) {
+        stopSlideAudio();
+      } else {
+        loadedAudioKey = '';
+        playSlideAudio(currentSlide);
+      }
+    });
+
+    langZhBtn.addEventListener('click', () => setLanguage('zh'));
+    langEnBtn.addEventListener('click', () => setLanguage('en'));
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
     document.addEventListener('keydown', (e) => {
       if (['ArrowRight', 'PageDown', ' '].includes(e.key)) nextSlide();
       if (['ArrowLeft', 'PageUp'].includes(e.key)) prevSlide();
       if (e.key === 'Home') showSlide(1);
       if (e.key === 'End') showSlide(totalSlides);
+      if (e.key.toLowerCase() === 'z') setLanguage('zh');
+      if (e.key.toLowerCase() === 'e') setLanguage('en');
     });
-
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.audio-toggle-btn')) return;
-      isSlideAudioEnabled = !isSlideAudioEnabled;
-      localStorage.setItem(AUDIO_AUTOPLAY_KEY, isSlideAudioEnabled ? 'on' : 'off');
-      updateAudioToggleUI();
-      if (!isSlideAudioEnabled) {
-        stopSlideAudio();
-      } else {
-        playSlideAudio(currentSlide);
-      }
-    });
-
-    const footerControls = document.createElement('div');
-    footerControls.className = 'controls';
-    footerControls.innerHTML =
-      '<button type="button" class="audio-toggle-btn" aria-pressed="true">語音：開</button>' +
-      '<button type="button" onclick="prevSlide()">上一頁</button>' +
-      '<button type="button" onclick="nextSlide()">下一頁</button>';
-    document.querySelectorAll('.slide-footer').forEach(footer => footer.appendChild(footerControls.cloneNode(true)));
 
     initSlideAudioPreference();
-    if (isSlideAudioEnabled) playSlideAudio(1);
+    renderSlide(currentSlide);
+    if (isSlideAudioEnabled) playSlideAudio(currentSlide);
   </script>
 </body>
 </html>
